@@ -242,7 +242,7 @@ body {
     height: 100%;
 }
 
-.search-form__response {
+.autocomplete {
     position: absolute;
     width: 100%;
     background-color: hsl(210, 19%, 44%);
@@ -250,7 +250,7 @@ body {
     top: 110%;
 }
 
-.search-form__response__item {
+.autocomplete__item {
     margin: 0 0 2px;
     cursor: pointer;
     transition: .2s;
@@ -262,4 +262,8 @@ body {
     &:focus, &:hover {
         background-color: rgba(#fff, .16);
     }
+}
+
+.autocomplete__item.active {
+    background-color: rgba(#fff, .16);
 }

@@ -2,6 +2,7 @@ import React, {useState} from "react"
 
 function SearchForm({setSearchQuery, searchResponse, setSelectedCityURL, setSearchResponse}) {
     const [value, setValue] = useState('')
+    const [currentItem, setCurrentItem] = useState(0)
 
     const inputHandler = (event) => {
         setValue(event.currentTarget.value)
@@ -22,16 +23,29 @@ function SearchForm({setSearchQuery, searchResponse, setSelectedCityURL, setSear
         setSearchResponse([])
     }
 
-    return <form className="search-form">
+    const keyboardControl = (event) => {
+        switch (event.keyCode) {
+            case 13: console.log('enter suka') //selectItem(searchResponse[currentItem].url)
+                break
+            case 38: currentItem > 0 && searchResponse.length > 1 ? setCurrentItem(currentItem - 1) : setCurrentItem(searchResponse.length -1)
+                break
+            case 40: currentItem < searchResponse.length - 1 && searchResponse.length > 1 ? setCurrentItem(currentItem + 1) : setCurrentItem(0)
+                break
+            default:
+                return 0
+        }
+    }
+
+    return <form className="search-form" onKeyDown={keyboardControl} autoComplete="off">
         <input className="search-form__input" type="text" value={value} onChange={inputHandler}/>
         <button className="search-form__btn" type="submit" onClick={handleSabmit} tabIndex={-1}>
             <img className="img" src={process.env.PUBLIC_URL + '/images/search.png'} alt="search" />
         </button>
         {searchResponse.length > 0 && value.trim().length > 0 
-            ?   <ul className="search-form__response">
-                    {searchResponse.map(item => {
+            ?   <ul className="search-form__response autocomplete">
+                    {searchResponse.map((item, index )=> {
                         return  <li
-                            className="search-form__response__item"
+                            className={`search-form__response__item autocomplete__item ${currentItem === index ? 'active' : ''}`}
                             key={item.id}
                             onClick={() => selectItem(item.url)}
                             onKeyDown={event => {
