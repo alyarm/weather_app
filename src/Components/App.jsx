@@ -101,6 +101,7 @@ function App() {
           searchResponse={searchResponse}
           setSelectedCityURL={setSelectedCityURL}
           setSearchResponse={setSearchResponse}
+          stringToURL={stringToURL}
         />
 
         {status.weatherResponseStatus >= 200 && status.weatherResponseStatus < 300 && weatherResponse.location !== undefined
